@@ -68,35 +68,46 @@ def informacoes():
     infos = True
 
 def desenha_container_titulo():
-    pygame.draw.rect(window,(21,0,80),(190,30,900,100),border_radius=90)
+    pygame.draw.rect(window,(21,0,80),(55,30,700,100),border_radius=90)
+
+def desenha_container_titulo2():
+    pygame.draw.rect(window,(21,0,80),(115,30,600,100),border_radius=90)
 
 def desenha_container_info():
-    pygame.draw.rect(window,(21,0,80),(39,222,1200,250),border_radius=80)
+    pygame.draw.rect(window,(21,0,80),(15,175,770,250),border_radius=80)
 
 def escreve_texto(texto,fonte,corTexto,posicaoX,posicaoY):
     textoEscrito = fonte.render(texto,True,corTexto)
     window.blit(textoEscrito,(posicaoX,posicaoY))
 
+def jogarnovament():
+    jogarnovamentzin()
+
+def jogarnovamentzin():
+    global jogar,jogo,ganhou,infos
+    jogar = False
+    jogo = True
+    ganhou = False
+    infos = False
 
 if __name__ == "__main__":
     pygame.init()
 
     relogio = pygame.time.Clock()
     fonte_texto = pygame.font.SysFont("arial", 30)
-    botaojogar = botao("JOGAR", 275, 275, 200, 100, teste)
-    botaoQUIT = botao("QUIT", 325,400,100,100,jogarFalse)
-    botaoinfo = botao("Informações", 490, 360, 300, 100, informacoes)
-    botaoJogarNovamente = botao("JOGAR NOVAMENTE", 200, 275, 350, 100, teste)
+    botaojogar = botao("JOGAR", 315, 190, 200, 100, teste)
+    botaoQUIT = botao("QUIT", 360,460,100,100,jogarFalse)
+    botaoinfo = botao("Informações", 270, 330, 300, 100, informacoes)
+    botaoJogarNovamente = botao("JOGAR NOVAMENTE", 245, 230, 350, 100, jogarnovament)
     
-    botaoQUIT2 = botao("QUIT", 660,550,200,100,jogarFalse)
+    botaoQUIT2 = botao("QUIT", 440,460,200,100,jogarFalse)
 
-    botaojogar2 = botao("JOGAR", 400, 550, 200, 100, teste)
+    botaojogar2 = botao("JOGAR", 160, 460, 200, 100, teste)
 
 
     # configs posicao frog
-    posicao_frog_x = 380  # posicao max 745 - min 12 - - 380
-    posicao_frog_y = 530
-
+    posicao_frog_x = 380 #380 
+    posicao_frog_y = 530 #530
     # posicao dos carros primeira parte
 
     # configs carro 1.1
@@ -147,7 +158,8 @@ if __name__ == "__main__":
     tamanho_pinguim = (55, 65)
 
     fonteGeral = pygame.font.Font(caminho_arquivo("fonte2.ttf"),34)
-    fonteGeral2 = pygame.font.Font(caminho_arquivo("fonte2.ttf"),30)
+    fonteGeral2 = pygame.font.Font(caminho_arquivo("fonte2.ttf"),23)
+    fontePEQUENA = pygame.font.Font(caminho_arquivo("fonte2.ttf"),12)
 
     pinguim = pygame.image.load(caminho_arquivo('pinguim_direita.png'))
     pinguim = pygame.transform.scale(pinguim, tamanho_pinguim)
@@ -197,7 +209,6 @@ if __name__ == "__main__":
 
     personagem_right()  # Inicializa o pinguim virado para a direita
 
-    ganhou = False
 
     jogar = False
     jogo = True
@@ -286,8 +297,8 @@ if __name__ == "__main__":
 
                 if pinguim_rect.colliderect(coracao_rect):
                     ganhou = True
-                    window.blit(bgInicio, (0,0))
-
+                    posicao_frog_x = 380
+                    posicao_frog_y = 535
                 # Atualizar retângulo do pinguim
                 pinguim_rect.x = posicao_frog_x
                 pinguim_rect.y = posicao_frog_y
@@ -317,10 +328,11 @@ if __name__ == "__main__":
             desenha_container_titulo()
             desenha_container_info()
 
-            escreve_texto("INFORMAÇÕES ABAIXO:",fonteGeral,(255,255,255),240,65)
-            escreve_texto("PARA JOGAR UTILIZE AS SETAS DO TECLADO",fonteGeral2,(255,255,255),85,280)
-            escreve_texto("PARA DISPARAR UTILIZE A TECLA ESPAÇO!",fonteGeral2,(255,255,255),85,370)
-
+            escreve_texto("INFORMAÇÕES ABAIXO:",fonteGeral,(255,255,255),85,65)
+            escreve_texto("PARA JOGAR UTILIZE AS SETAS",fonteGeral2,(255,255,255),90,205)
+            escreve_texto("DO SEU TECLADO",fonteGeral2,(255,255,255),260,255)
+            escreve_texto("SEU OBJETIVO É CHEGAR ATÉ O",fonteGeral2,(255,255,255),90,320)
+            escreve_texto("CORAÇÃO",fonteGeral2,(255,255,255),320,370)
 
             botaojogar2.desenha_botao()
             botaojogar2.click()
@@ -332,6 +344,12 @@ if __name__ == "__main__":
                 # update da tela
         else:
             window.blit(bgInicio, (0,0))
+
+            desenha_container_titulo2()
+
+            escreve_texto("CROSSY-ROAD",fonteGeral,(255,255,255),230,57)
+            escreve_texto("VERSÃO: SHOPEE",fontePEQUENA,(255,255,255),330,105)
+
 
             botaojogar.desenha_botao()
             botaojogar.click()
