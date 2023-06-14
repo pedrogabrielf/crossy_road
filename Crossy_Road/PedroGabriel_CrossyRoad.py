@@ -57,11 +57,26 @@ def jogarFalse():
     global jogo
     jogo = False
 
-def caminho_arquivo(nome):
-    caminho = os.getcwd()
-    caminhoAbsoluto = os.path.join(caminho, "Crossy_Road/img", nome)
-    caminhoAbsoluto = Path(caminhoAbsoluto)
+def caminho_arquivo(nome:str):
+    global caminho_arquivo
+    caminho = os.path.dirname(os.path.realpath(__file__))
+    caminhoAbsoluto = os.path.join(caminho, "assets/", nome)
     return caminhoAbsoluto
+
+def informacoes():
+    global infos
+    infos = True
+
+def desenha_container_titulo():
+    pygame.draw.rect(window,(21,0,80),(190,30,900,100),border_radius=90)
+
+def desenha_container_info():
+    pygame.draw.rect(window,(21,0,80),(39,222,1200,250),border_radius=80)
+
+def escreve_texto(texto,fonte,corTexto,posicaoX,posicaoY):
+    textoEscrito = fonte.render(texto,True,corTexto)
+    window.blit(textoEscrito,(posicaoX,posicaoY))
+
 
 if __name__ == "__main__":
     pygame.init()
@@ -70,9 +85,14 @@ if __name__ == "__main__":
     fonte_texto = pygame.font.SysFont("arial", 30)
     botaojogar = botao("JOGAR", 275, 275, 200, 100, teste)
     botaoQUIT = botao("QUIT", 325,400,100,100,jogarFalse)
-
+    botaoinfo = botao("Informações", 490, 360, 300, 100, informacoes)
     botaoJogarNovamente = botao("JOGAR NOVAMENTE", 200, 275, 350, 100, teste)
     
+    botaoQUIT2 = botao("QUIT", 660,550,200,100,jogarFalse)
+
+    botaojogar2 = botao("JOGAR", 400, 550, 200, 100, teste)
+
+
     # configs posicao frog
     posicao_frog_x = 380  # posicao max 745 - min 12 - - 380
     posicao_frog_y = 530
@@ -126,13 +146,15 @@ if __name__ == "__main__":
     # load imagens
     tamanho_pinguim = (55, 65)
 
+    fonteGeral = pygame.font.Font(caminho_arquivo("fonte2.ttf"),34)
+    fonteGeral2 = pygame.font.Font(caminho_arquivo("fonte2.ttf"),30)
 
     pinguim = pygame.image.load(caminho_arquivo('pinguim_direita.png'))
     pinguim = pygame.transform.scale(pinguim, tamanho_pinguim)
 
     pinguim_rect = pygame.Rect(posicao_frog_x, posicao_frog_y, pinguim.get_width() - 30, pinguim.get_height() - 30)
 
-    bgInicio = pygame.image.load(caminho_arquivo('fundo2.jpg'))
+    bgInicio = pygame.image.load(caminho_arquivo('fundo.png'))
     bgInicio = pygame.transform.scale(bgInicio, (largura,altura))
 
     background = pygame.image.load(caminho_arquivo('background_frogger.png'))
@@ -180,6 +202,8 @@ if __name__ == "__main__":
     jogar = False
     jogo = True
     ganhou = False
+    infos = False
+
     while jogo:
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
@@ -284,12 +308,36 @@ if __name__ == "__main__":
                 window.blit(iglu, (posicao_iglu_x, posicao_iglu_y))
 
                 window.blit(coracao, (posicao_core_x, posicao_core_y))
+        elif infos:
+        
+            window.fill((0,0,0))
+
+            window.blit(bgInicio, (0,0))
+
+            desenha_container_titulo()
+            desenha_container_info()
+
+            escreve_texto("INFORMAÇÕES ABAIXO:",fonteGeral,(255,255,255),240,65)
+            escreve_texto("PARA JOGAR UTILIZE AS SETAS DO TECLADO",fonteGeral2,(255,255,255),85,280)
+            escreve_texto("PARA DISPARAR UTILIZE A TECLA ESPAÇO!",fonteGeral2,(255,255,255),85,370)
+
+
+            botaojogar2.desenha_botao()
+            botaojogar2.click()
+
+            botaoQUIT2.desenha_botao()
+            botaoQUIT2.click()
+
+
                 # update da tela
         else:
             window.blit(bgInicio, (0,0))
 
             botaojogar.desenha_botao()
             botaojogar.click()
+
+            botaoinfo.desenha_botao()
+            botaoinfo.click()
 
             botaoQUIT.desenha_botao()
             botaoQUIT.click()  
