@@ -1,6 +1,7 @@
 import pygame
 import sys
-
+import os
+from pathlib import Path
 class botao():
     def __init__(self,texto,x,y,largura,altura,funcao):
         # Atributos padrões para verificações por motivos de performace
@@ -56,6 +57,12 @@ def jogarFalse():
     global jogo
     jogo = False
 
+def caminho_arquivo(nome):
+    caminho = os.getcwd()
+    caminhoAbsoluto = os.path.join(caminho, "Crossy_Road/img", nome)
+    caminhoAbsoluto = Path(caminhoAbsoluto)
+    return caminhoAbsoluto
+
 if __name__ == "__main__":
     pygame.init()
 
@@ -64,7 +71,7 @@ if __name__ == "__main__":
     botaojogar = botao("JOGAR", 275, 275, 200, 100, teste)
     botaoQUIT = botao("QUIT", 325,400,100,100,jogarFalse)
 
-    botaoJogarNovamente = botao("JOGAR NOVAMENTE", 275, 275, 200, 100, teste)
+    botaoJogarNovamente = botao("JOGAR NOVAMENTE", 200, 275, 350, 100, teste)
     
     # configs posicao frog
     posicao_frog_x = 380  # posicao max 745 - min 12 - - 380
@@ -120,50 +127,50 @@ if __name__ == "__main__":
     tamanho_pinguim = (55, 65)
 
 
-    pinguim = pygame.image.load('img/pinguim_direita.png')
+    pinguim = pygame.image.load(caminho_arquivo('pinguim_direita.png'))
     pinguim = pygame.transform.scale(pinguim, tamanho_pinguim)
 
     pinguim_rect = pygame.Rect(posicao_frog_x, posicao_frog_y, pinguim.get_width() - 30, pinguim.get_height() - 30)
 
-    bgInicio = pygame.image.load('img/fundo2.jpg')
+    bgInicio = pygame.image.load(caminho_arquivo('fundo2.jpg'))
     bgInicio = pygame.transform.scale(bgInicio, (largura,altura))
 
-    background = pygame.image.load('img/background_frogger.png')
+    background = pygame.image.load(caminho_arquivo('background_frogger.png'))
     background = pygame.transform.scale(background, (largura, altura))
 
-    carro1 = pygame.image.load('img/carro_azul_direita.png')
+    carro1 = pygame.image.load(caminho_arquivo('carro_azul_direita.png'))
     carro1 = pygame.transform.scale(carro1, (120, 75))
 
-    carro2 = pygame.image.load('img/carro_azul2_esquerda.png')
+    carro2 = pygame.image.load(caminho_arquivo('carro_azul2_esquerda.png'))
     carro2 = pygame.transform.scale(carro2, (120, 65))
 
-    carro3 = pygame.image.load('img/caminhao_esquerda.png')
+    carro3 = pygame.image.load(caminho_arquivo('caminhao_esquerda.png'))
     carro3 = pygame.transform.scale(carro3, (120, 65))
 
-    carro4 = pygame.image.load('img/carro_azul_esquerda.png')
+    carro4 = pygame.image.load(caminho_arquivo('carro_azul_esquerda.png'))
     carro4 = pygame.transform.scale(carro4, (110, 50))
 
-    carro5 = pygame.image.load('img/carro5.png')
+    carro5 = pygame.image.load(caminho_arquivo('carro5.png'))
     carro5 = pygame.transform.scale(carro5, (120, 135))
 
-    carro6 = pygame.image.load('img/carro6.png')
+    carro6 = pygame.image.load(caminho_arquivo('carro6.png'))
     carro6 = pygame.transform.scale(carro6, (125, 80))
 
-    iglu = pygame.image.load('img/iglu.png')
+    iglu = pygame.image.load(caminho_arquivo('iglu.png'))
     iglu = pygame.transform.scale(iglu,(74,70))
 
-    coracao = pygame.image.load('img/coracao.png')
+    coracao = pygame.image.load(caminho_arquivo('coracao.png'))
     coracao = pygame.transform.scale(coracao,(79,52))
-    coracao_rect = pygame.Rect(posicao_core_x, posicao_core_y, coracao.get_width(), coracao.get_height() - 30)
+    coracao_rect = pygame.Rect(posicao_core_x, posicao_core_y, coracao.get_width()-50, coracao.get_height() - 50)
 
     def personagem_right():
         global pinguim
-        pinguim = pygame.image.load('img/pinguim_direita.png')
+        pinguim = pygame.image.load(caminho_arquivo('pinguim_direita.png'))
         pinguim = pygame.transform.scale(pinguim, tamanho_pinguim)
 
     def personagem_left():
         global pinguim
-        pinguim = pygame.image.load('img/pinguim_esquerda.png')
+        pinguim = pygame.image.load(caminho_arquivo('pinguim_esquerda.png'))
         pinguim = pygame.transform.scale(pinguim, tamanho_pinguim)
 
     personagem_right()  # Inicializa o pinguim virado para a direita
@@ -179,10 +186,6 @@ if __name__ == "__main__":
                 pygame.quit()
                 sys.exit()
         
-        #if ganhou:
-            #window.fill((0,0,0))
-            #print("a")
-            
         if jogar:
             if ganhou:
                 window.fill((0,0,0))
